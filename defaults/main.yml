@@ -1,0 +1,5 @@
+---
+# defaults file for cmurphy.jellyfin
+
+jellyfin_service_enabled: true
+jellyfin_service_state: started

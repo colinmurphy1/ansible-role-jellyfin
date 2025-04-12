@@ -1,0 +1,17 @@
+galaxy_info:
+  role_name: jellyfin
+  namespace: cmurphy
+  author: Colin Murphy
+  description: Jellyfin
+  license: MIT
+  min_ansible_version: "2.5"
+  platforms:
+    - name: Debian
+      version: all
+    - name: Ubuntu
+      version: all
+  galaxy_tags:
+    - jellyfin
+    - mediaserver
+    - media
+dependencies: []

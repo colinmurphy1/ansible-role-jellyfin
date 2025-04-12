@@ -1,0 +1,16 @@
+---
+# tasks file for cmurphy.jellyfin
+
+- name: Add Jellyfin repo
+  ansible.builtin.include_tasks: "repo-{{ ansible_os_family | lower }}.yml"
+
+- name: Install Jellyfin
+  ansible.builtin.package:
+    name: jellyfin
+    state: present
+
+- name: Jellyfin Service
+  ansible.builtin.service:
+    name: jellyfin
+    state: "{{ jellyfin_service_state }}"
+    enabled: "{{ jellyfin_service_enabled }}"
