@@ -4,6 +4,12 @@
 - name: Add Jellyfin repo
   ansible.builtin.include_tasks: "repo-{{ ansible_os_family | lower }}.yml"
 
+- name: Install libicu (debian)
+  ansible.builtin.package:
+    name: libicu-dev
+    state: present
+  when: ansible_os_family == 'Debian'
+
 - name: Install Jellyfin
   ansible.builtin.package:
     name: jellyfin

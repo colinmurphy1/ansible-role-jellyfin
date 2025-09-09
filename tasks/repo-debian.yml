@@ -2,21 +2,26 @@
 
 # Jellyfin repo (Debian/Ubuntu)
 
-- name: Ensure curl and gnupg are installed
-  ansible.builtin.package:
-    name: "{{ item }}"
-    state: present
-  loop:
-    - curl
-    - gnupg
-
-- name: Add Jellyfin repo signing key
-  ansible.builtin.apt_key:
-    url: "https://repo.jellyfin.org/jellyfin_team.gpg.key"
-    state: present
+# - name: Ensure curl and gnupg are installed
+#   ansible.builtin.package:
+#     name: "{{ item }}"
+#     state: present
+#   loop:
+#     - curl
+#     - gnupg
 
 - name: Add Jellyfin repo
-  ansible.builtin.apt_repository:
-    repo: "deb https://repo.jellyfin.org/{{ ansible_facts['distribution'] | lower }} {{ ansible_facts['distribution_release'] | lower }} main"
+  ansible.builtin.deb822_repository:
+    name: jellyfin
+    types: deb
+    uris: "https://repo.jellyfin.org/{{ ansible_facts['distribution'] | lower }}"
+    suites: "{{ ansible_facts['distribution_release'] | lower }}"
+    components: main
+    architectures: "{{ 'arm64' if ansible_facts.architecture == 'aarch64' else 'amd64' }}"
+    signed_by: "https://repo.jellyfin.org/jellyfin_team.gpg.key"
+    enabled: true
     state: present
-    update_cache: true
+  notify: APT Update
+
+- name: Run handlers now
+  ansible.builtin.meta: flush_handlers

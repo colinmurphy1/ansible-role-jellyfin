@@ -1,2 +1,6 @@
 ---
 # handlers file for cmurphy.jellyfin
+
+- name: "APT Update"
+  ansible.builtin.apt:
+    update_cache: true
