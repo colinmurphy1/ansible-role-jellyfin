@@ -2,13 +2,13 @@
 # tasks file for cmurphy.jellyfin
 
 - name: Add Jellyfin repo
-  ansible.builtin.include_tasks: "repo-{{ ansible_os_family | lower }}.yml"
+  ansible.builtin.include_tasks: "repo-{{ ansible_facts['os_family'] | lower }}.yml"
 
 - name: Install libicu (debian)
   ansible.builtin.package:
     name: libicu-dev
     state: present
-  when: ansible_os_family == 'Debian'
+  when: ansible_facts['os_family'] == 'Debian'
 
 - name: Install Jellyfin
   ansible.builtin.package:
